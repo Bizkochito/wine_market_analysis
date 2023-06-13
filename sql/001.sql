@@ -41,7 +41,7 @@ ORDER BY winery_avg_rating DESC
 LIMIT 5;
 
 -- Find the best winery, with more refined criterions
-SELECT wineries.name, ROUND(AVG(vintages.price_euros),2)  AS winery_avg_price, ROUND(AVG(vintages.ratings_average),2)  AS winery_avg_rating, ROUND(AVG(vintages.ratings_count),2) AS avg_ratings_count, AVG(vintages.price_euros/vintages.ratings_average), COUNT(*) AS number_of_vintages
+SELECT wineries.name, ROUND(AVG(vintages.price_euros),2)  AS winery_avg_price, ROUND(AVG(vintages.ratings_average),2)  AS winery_avg_rating, ROUND(AVG(vintages.ratings_count),2) AS avg_ratings_count, AVG(vintages.price_euros/vintages.ratings_average), COUNT(vintages.name) AS number_of_vintages
 FROM vintages
 INNER JOIN wines
 ON vintages.wine_id = wines.id
@@ -69,4 +69,13 @@ HAVING COUNT(keywords.name = "_offee") > 10
     AND COUNT(keywords.name = "_oast") > 10
     AND COUNT(keywords.name = "green apple") > 10
     AND COUNT(keywords.name = "cream") > 10
-    AND COUNT(keywords.name = "citrus") > 10
+    AND COUNT(keywords.name = "citrus_fruit") > 10
+LIMIT 5;
+
+SELECT keywords.name, COUNT(*)
+FROM keywords_wine
+INNER JOIN keywords
+ON keywords_wine.keyword_id = keywords.id
+INNER JOIN wines
+ON keywords_wine.wine_id = wines.id
+GROUP BY keywords_wine.keyword_id
