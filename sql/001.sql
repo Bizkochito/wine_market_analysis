@@ -72,10 +72,24 @@ HAVING COUNT(keywords.name = "_offee") > 10
     AND COUNT(keywords.name = "citrus_fruit") > 10
 LIMIT 5;
 
-SELECT keywords.name, COUNT(*)
+SELECT wines.name, COUNT(*)
 FROM keywords_wine
+
 INNER JOIN keywords
 ON keywords_wine.keyword_id = keywords.id
 INNER JOIN wines
 ON keywords_wine.wine_id = wines.id
-GROUP BY keywords_wine.keyword_id
+GROUP BY wines.id
+HAVING COUNT(keywords.name LIKE 'BO%')
+
+
+SELECT wines.name, keywords_wine.group_name, keywords_wine.keyword_type, keywords.name AS keyword, keywords_wine.count
+FROM wines
+JOIN keywords_wine
+ON wines.id = keywords_wine.wine_id
+-- FROM keywords_wine
+JOIN keywords
+ON keywords_wine.keyword_id =  keywords.id
+WHERE keywords_wine.count > 10 
+    AND keywords.name IN ('Coffee','Toast','Green apple','cream','citrus');
+
