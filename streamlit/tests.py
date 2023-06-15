@@ -19,18 +19,24 @@ for i in cursor:
     UsersCount.append(i[1])
     WineriesCount.append(i[2]*50)
 
+
 chart_data = pd.DataFrame(list(zip(CountryName, UsersCount, WineriesCount)),
-               columns =['Countries', 'Users', 'Wineries'])
-chart_data.set_index('Countries')
+               columns =['countries', 'users', 'wineries'])
+#
+#'
+cols_to_melt = ['users', 'wineries']
+cols_to_keep = chart_data.columns.difference(cols_to_melt)
 
-
-
-alt.Chart(chart_data.melt('Countries', )).mark_bar(opacity=0.7).encode(
-    x='Countries:O',
-    y=alt.Y('Users:Q').stack(None),
-    color="source",
+chart_data = chart_data.melt(id_vars='countries', value_vars=['users', 'wineries'], var_name='type')
+print(chart_data)
+c= alt.Chart(chart_data).mark_bar(opacity=0.7).encode(
+    x='countries:O',
+    y=alt.Y('type:Q').stack(None),
+    color = 'value'
 )
 
+
+st.altair_chart(c, use_container_width=True)
 
 # Streamlit widgets automatically run the script from top to bottom. Since
 # this button is not connected to any other logic, it just causes a plain
