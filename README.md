@@ -11,9 +11,12 @@ for instance using:
 ```
 pip install -r requirements.txt
 ```
+## SQL
+The SQL scripts makes extensive use of sqlite3.  
+It is advised to run it using a SQL notebook, inside VSCode for instance, to have the best experience.
 ## Streamlit
 To get the best display, you can run, from your command line, localized in the base file of this repo:
 ```
-streamlit run streamlit/tests_plt.py      
+streamlit run streamlit/wiwinio_tabs.py      
 ```
 It opens inside your default browser. Browse the tabs to have a look at the different graphs.
